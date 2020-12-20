@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+
+opentracing:
+  jaeger:
+    service-name: ReceiverService
+    enabled: true
+    log-spans: true
+    probabilistic-sampler:
+      sampling-rate: 1
+    udp-sender:
+      host: ${JAEGER_HOST}
+      port: ${JAEGER_PORT}
+logging:
+  level:
+    root: INFO
+    io.opentracing.*: DEBUG
+    io.jaegertracing.*: DEBUG
+
+receiver:
+#  baseurl: "http://localhost:8080"
+  baseurl: ${API_BASE_URL}
