@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-rabbitmq-receiver-v1
+  labels:
+    app: spring-rabbitmq-receiver
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: spring-rabbitmq-receiver
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spring-rabbitmq-receiver
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/actuator/prometheus"
+    spec:
+      containers:
+        - name: spring-rabbitmq-receiver
+          image: sangad/spring-rabbitmq-receiver:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 294Mi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+          env:
+            - name: RABBITMQ_HOST
+              value: "my-rabbitmq.rabbitmq.svc.cluster.local"
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: JAEGER_HOST
+              value: "jaeger-collector.istio-system.svc.cluster.local"
+            - name: JAEGER_PORT
+              value: "6831"
+            - name: API_BASE_URL
+              value: "http://spring-rabbitmq-producer.demo.svc.cluster.local"
+            - name: RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mq-secret
+                  key: username
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mq-secret
+                  key: password
