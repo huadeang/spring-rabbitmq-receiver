@@ -19,7 +19,7 @@ opentracing:
 #      host: ${JAEGER_HOST}
 #      port: ${JAEGER_PORT}
     http-sender:
-      url: "http://jaeger-collector.istio-system.svc.cluster.local:14268"
+      url: "http://jaeger-collector.istio-system.svc.cluster.local:14268/api/traces"
 logging:
   level:
     root: INFO
