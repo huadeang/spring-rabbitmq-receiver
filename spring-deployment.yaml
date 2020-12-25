@@ -51,7 +51,7 @@ spec:
             - name: JAEGER_PORT
               value: "6831"
             - name: API_BASE_URL
-              value: "http://spring-rabbitmq-producer.demo.svc.cluster.local"
+              value: "http://spring-rabbitmq-producer.demo.svc.cluster.local:8080"
             - name: RABBITMQ_USERNAME
               valueFrom:
                 secretKeyRef:
