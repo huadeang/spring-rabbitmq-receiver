@@ -15,9 +15,11 @@ opentracing:
     log-spans: true
     probabilistic-sampler:
       sampling-rate: 1
-    udp-sender:
-      host: ${JAEGER_HOST}
-      port: ${JAEGER_PORT}
+#    udp-sender:
+#      host: ${JAEGER_HOST}
+#      port: ${JAEGER_PORT}
+    http-sender:
+      url: "http://jaeger-collector.istio-system.svc.cluster.local:14268"
 logging:
   level:
     root: INFO
