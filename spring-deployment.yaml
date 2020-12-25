@@ -30,13 +30,13 @@ spec:
           resources:
             limits:
               memory: 294Mi
-          livenessProbe:
+#          livenessProbe:
 #            httpGet:
 #              path: /actuator/health/liveness
 #              port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 10
+#            initialDelaySeconds: 10
+#            periodSeconds: 10
+#            timeoutSeconds: 10
 #          readinessProbe:
 #            httpGet:
 #              path: /actuator/health/readiness
